@@ -1,10 +1,11 @@
 package simulator.model;
 
+import org.json.JSONObject;
+
 import exception.carStatusException;
 import exception.contClassException;
 import exception.itineraryLengthException;
 import exception.maxSpeedException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +51,10 @@ public class Vehicle extends SimulatedObject {
         return location;
     }
 
+    public VehicleStatus getStatus() {
+        return status;
+    }
+
     public List<Junction> getItinerary() {
         return itinerary;
     }
@@ -92,9 +97,8 @@ public class Vehicle extends SimulatedObject {
                 itinerary.get(currentJunction).enter(this);
                 status = VehicleStatus.WAITING;
                 currentSpeed = 0;
+
             }
-        } else {
-            currentSpeed = 0;
         }
     }
 

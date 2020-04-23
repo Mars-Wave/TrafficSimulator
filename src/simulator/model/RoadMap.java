@@ -1,9 +1,10 @@
 package simulator.model;
 
-import exception.duplicateKeyException;
-import exception.unexistingReferencedObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import exception.duplicateKeyException;
+import exception.unexistingReferencedObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,11 +37,7 @@ public class RoadMap {
     }
 
     void addRoad(Road r) {
-        boolean found = false;
-        for (int i = 0; i < js.size() && !found; i++) {
-            found = js.get(i).equals(r.getDest());
-        }
-        if (!found) {
+        if (getJunction(r.getDest().getId()) == null) {
             throw new unexistingReferencedObject("No junction by the name implied exists to be a destination for the road.");
         }
         if (srMap.get(r.getId()) == null) {
@@ -51,9 +48,14 @@ public class RoadMap {
 
     void addVehicle(Vehicle v) {
         for (int i = 0; i < v.getItinerary().size() - 2; i++) {
+        	if(getJunction(v.getItinerary().get(i).getId()).equals(null)) {
+        		 throw new unexistingReferencedObject("The junction by the name " + v.getItinerary().get(i).getId() + " doesn't exist.");
+        	}
             if (v.getItinerary().get(i).roadTo(v.getItinerary().get(i + 1)).equals(null)) {
+            	
                 throw new unexistingReferencedObject("The itinerary is invalid for vehicle " + v);
             }
+        	
         }
         if (svMap.get(v.getId()) == null) {
             vs.add(v);

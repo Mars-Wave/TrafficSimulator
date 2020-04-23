@@ -9,19 +9,15 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 
     @Override
     void execute(RoadMap map) {
-        Junction src = null, dest = null;
-        boolean found = false;
-        for (int i = 0; i < map.getJunctions().size() && !found; i++) {
-            if (map.getJunctions().get(i).getId().equalsIgnoreCase(srcJun)) {
-                src = map.getJunctions().get(i);
-
-            }
-            if (map.getJunctions().get(i).getId().equalsIgnoreCase(destJunc)) {
-                dest = map.getJunctions().get(i);
-            }
-            found = src != null && dest != null;
-        }
+    	 Junction src = map.getJunction(srcJun), dest = map.getJunction(destJunc);
         InterCityRoad r = new InterCityRoad(id, src, dest, length, co2Limit, maxSpeed, weather);
         map.addRoad(r);
     }
+    
+    @Override
+    public String toString() {
+		return "New Inter City Road '"+ id +"'";
+    	
+    }
+    
 }

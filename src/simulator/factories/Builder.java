@@ -7,7 +7,7 @@ public abstract class Builder<T> {
 
     Builder(String type) {
         if (type == null)
-            throw new IllegalArgumentException("Invalid type of builder");
+            throw new IllegalArgumentException("Invalid type: " + type);
         else
             _type = type;
     }

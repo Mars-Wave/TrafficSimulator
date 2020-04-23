@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.Pair;
 import simulator.model.Event;
-import simulator.model.NewSetContClassEvent;
+import simulator.model.SetContClassEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class SetContClassEventBuilder extends Builder<Event> {
             p = new Pair<>(item.getString("vehicle"), item.getInt("class"));
             list.add(p);
         }
-        return new NewSetContClassEvent(data.getInt("time"), list);
+        return new SetContClassEvent(data.getInt("time"), list);
     }
 }
 

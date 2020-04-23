@@ -1,9 +1,10 @@
 package simulator.model;
 
-import exception.unexistingReferencedObject;
 import simulator.misc.Pair;
 
 import java.util.List;
+
+import exception.unexistingReferencedObject;
 
 public class SetWeatherEvent extends Event {
 
@@ -21,10 +22,16 @@ public class SetWeatherEvent extends Event {
 
     @Override
     void execute(RoadMap map) {
-        for (Pair<String, Weather> w : ws) {
-            if (map.getRoad(w.getFirst()) == null) throw new NullPointerException();
-            map.getRoad(w.getFirst()).setWeather(w.getSecond());
+        for (int i = 0; i < ws.size(); i++) {
+            if (map.getRoad(ws.get(i).getFirst()) == null) throw new NullPointerException();
+            map.getRoad(ws.get(i).getFirst()).setWeather(ws.get(i).getSecond());
         }
+    }
+    
+    @Override
+    public String toString() {
+		return "New Weather "+ ws +"'";
+    	
     }
 
 }

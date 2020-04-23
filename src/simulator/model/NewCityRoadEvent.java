@@ -9,22 +9,14 @@ public class NewCityRoadEvent extends NewRoadEvent {
 
     @Override
     void execute(RoadMap map) {
-        Junction src = null, dest = null;
-        boolean found = false;
-        for (int i = 0; i < map.getJunctions().size() && !found; i++) {
-            if (map.getJunctions().get(i).getId().equalsIgnoreCase(srcJun)) {
-                src = map.getJunctions().get(i);
-                found = true;
-            }
-        }
-        found = false;
-        for (int i = 0; i < map.getJunctions().size() && !found; i++) {
-            if (map.getJunctions().get(i).getId().equalsIgnoreCase(destJunc)) {
-                dest = map.getJunctions().get(i);
-                found = true;
-            }
-        }
+        Junction src = map.getJunction(srcJun), dest = map.getJunction(destJunc);
         CityRoad r = new CityRoad(id, src, dest, maxSpeed, co2Limit, length, weather);
         map.addRoad(r);
+    }
+    
+    @Override
+    public String toString() {
+		return "New City Road '"+ id +"'";
+    	
     }
 }

@@ -15,7 +15,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
         if (roads.isEmpty()) return -1;
         else if (currGreen == -1) return findMax(qs, 0);
         else if (currTime - lastSwitchingTime < timeSlot) return currGreen;
-        else return findMax(qs, currGreen + 1);
+        else return findMax(qs, (currGreen + 1)%qs.size());
 
     }
 

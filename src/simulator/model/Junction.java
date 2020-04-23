@@ -1,10 +1,12 @@
 package simulator.model;
 
-import exception.negativeValue;
-import exception.roadMapCoherenceException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import exception.negativeValue;
+import exception.roadMapCoherenceException;
+
+import java.awt.RenderingHints;
 import java.util.*;
 
 public class Junction extends SimulatedObject {
@@ -12,7 +14,7 @@ public class Junction extends SimulatedObject {
     private Map<Junction, Road> jrmap;
     private List<List<Vehicle>> qs;
     private Map<Road, List<Vehicle>> rqmap;
-    private int greenLightIndex;
+    private int greenLightIndex = -1;
     private int xCoor;
     private int yCoor;
     private int LastSwitchingTime;
@@ -64,7 +66,14 @@ public class Junction extends SimulatedObject {
     }
 
     public void enter(Vehicle v) {
+        if (qs.size() == 0) {
+            List<Vehicle> q = new LinkedList<>();
+            qs.add(q);
+            rqmap.put(v.getRoad(), q);
             rqmap.get(v.getRoad()).add(v);
+        } else {
+            rqmap.get(v.getRoad()).add(v);
+        }
     }
 
     public Road roadTo(Junction j) {
@@ -73,16 +82,19 @@ public class Junction extends SimulatedObject {
 
     @Override
     public void advance(int time) {
-        if (!qs.isEmpty() && !qs.get(greenLightIndex).isEmpty()) {
+        if (greenLightIndex != -1 && !qs.isEmpty() && !qs.get(greenLightIndex).isEmpty()) {
             List<Vehicle> q;
-            q = DS.dequeue(qs.get(greenLightIndex));
-            for (int i = 0; i < q.size(); i++) {
-                q.get(i).moveToNextRoad();
-                qs.get(greenLightIndex).remove(i);
+            if (qs.size() > greenLightIndex) {
+                q = DS.dequeue(qs.get(greenLightIndex));
+                for (int i = 0; i < q.size(); i++) {
+                    q.get(i).moveToNextRoad();
+                    qs.get(greenLightIndex).remove(i);
+                }
             }
         }
-        if (greenLightIndex != LSS.chooseNextGreen(roadL, qs, greenLightIndex, LastSwitchingTime, time)) {
-            greenLightIndex = LSS.chooseNextGreen(roadL, qs, greenLightIndex, LastSwitchingTime, time);
+        int tempIndex = LSS.chooseNextGreen(roadL, qs, greenLightIndex, LastSwitchingTime, time);
+        if (tempIndex != greenLightIndex) {
+            greenLightIndex = tempIndex;
             LastSwitchingTime = time;
         }
     }
@@ -106,4 +118,14 @@ public class Junction extends SimulatedObject {
         }
         return rep;
     }
+
+	public int getGreenLightIndex() {
+		// TODO Auto-generated method stub
+		return greenLightIndex;
+	}
+
+	public List<Road> getInRoads() {
+		// TODO Auto-generated method stub
+		return roadL;
+	}
 }

@@ -4,11 +4,11 @@ import simulator.misc.Pair;
 
 import java.util.List;
 
-public class NewSetContClassEvent extends Event {
+public class SetContClassEvent extends Event {
 
     private List<Pair<String, Integer>> cs;
 
-    public NewSetContClassEvent(int time, List<Pair<String, Integer>> cs) {
+    public SetContClassEvent(int time, List<Pair<String, Integer>> cs) {
         super(time);
         if (cs == null)
             throw new NullPointerException();
@@ -17,13 +17,19 @@ public class NewSetContClassEvent extends Event {
 
     @Override
     void execute(RoadMap map) {
-        for (Pair<String, Integer> c : cs) {
-            Vehicle v = map.getVehicle(c.getFirst());
+        for (int i = 0; i < cs.size(); i++) {
+            Vehicle v = map.getVehicle(cs.get(i).getFirst());
             if (v == null) {
                 throw new NullPointerException();
             }
-            v.setContaminationClass(c.getSecond());
+            v.setContaminationClass(cs.get(i).getSecond());
         }
+    }
+    
+    @Override
+    public String toString() {
+		return "New Cont Class '"+ cs +"'";
+    	
     }
 
 }

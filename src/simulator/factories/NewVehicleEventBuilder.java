@@ -17,7 +17,7 @@ public class NewVehicleEventBuilder extends Builder<Event> {
     @Override
     protected Event createTheInstance(JSONObject data) {
         JSONArray arr = data.getJSONArray("itinerary");
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         for (int i = 0; i < arr.length(); i++) {
             list.add(arr.getString(i));
         }
