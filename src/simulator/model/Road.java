@@ -59,9 +59,29 @@ public abstract class Road extends SimulatedObject {
 	public Junction getSrc() {
 		return sourceJunction;
 	}
+	
+	public Weather getWeather() {
+		return weather;
+	}
+	
+	public int getMaxSpeed() {
+		return maxSpeed;
+	}
+	
+	public int getSpeedLimit() {
+		return currentSpeedLimit;
+	}
+	
+	public int getTotalCont() {
+		return totalCont;
+	}
+	
+	public double getContLimit() {
+		return contaminationAlarmLimit;
+	}
 
 	public void enter(Vehicle v) {
-		if (v.getLocation() == 0 && v.getSpeed() == 0) {
+		if (v.getLocation() == 0 && v.getCurrentSpeed() == 0) {
 			vehicles.add(v);
 		} else {
 			throw new vehicleCoherenceException(
@@ -121,14 +141,6 @@ public abstract class Road extends SimulatedObject {
 		}
 		rep.put("vehicles", arr);
 		return rep;
-	}
-
-	public double getTotalCont() {
-		return totalCont;
-	}
-
-	public double getContLimit() {
-		return contaminationAlarmLimit;
 	}
 
 	public abstract void reduceTotalContamination();

@@ -128,4 +128,9 @@ public class Junction extends SimulatedObject {
 		// TODO Auto-generated method stub
 		return roadL;
 	}
+	
+	public Map<Road, List<Vehicle>> getMapRq() {
+		// TODO Auto-generated method stub
+		return rqmap;
+	}
 }

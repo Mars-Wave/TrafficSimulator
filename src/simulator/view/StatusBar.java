@@ -18,6 +18,8 @@ import simulator.model.TrafficSimObserver;
 public class StatusBar extends JPanel implements TrafficSimObserver{
 	
 	private Controller controller;
+	private JLabel simTimeLabel;
+	private JLabel eventLabel;
 
 	public StatusBar(Controller _ctrl) {
 		// TODO Auto-generated constructor stub
@@ -28,30 +30,29 @@ public class StatusBar extends JPanel implements TrafficSimObserver{
 	private void initGUI() {
 		// TODO Auto-generated method stub
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		JLabel simTimeLabel = new JLabel();
+		simTimeLabel = new JLabel();
 		this.add(simTimeLabel);
 		this.add(Box.createRigidArea(new Dimension(10, 0)));
 		this.add(new JSeparator(SwingConstants.VERTICAL));
-		JLabel eventLabel = new JLabel();
+		eventLabel = new JLabel();
 		this.add(eventLabel);
 	}
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		simTimeLabel.setText("Time: " + time);
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
 		// TODO Auto-generated method stub
-		
+		eventLabel.setText("Event added (" + e.toString() + ")");
 	}
 
 	@Override
