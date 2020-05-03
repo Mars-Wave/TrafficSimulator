@@ -7,7 +7,9 @@ import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
+import simulator.view.MainWindow;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
     private final static Integer _timeLimitDefaultValue = 10;
     private static String _inFile = null;
     private static String _outFile = null;
+    private static Mode _mode = null;
     private static Factory<Event> _eventsFactory = null;
     private static int ticks;
 
@@ -35,6 +37,7 @@ public class Main {
         try {
             CommandLine line = parser.parse(cmdLineOptions, args);
             parseHelpOption(line, cmdLineOptions);
+            parseModeOption(line);
             parseInFileOption(line);
             parseOutFileOption(line);
             parseTicksOption(line);
@@ -62,8 +65,8 @@ public class Main {
 
         cmdLineOptions.addOption(Option.builder("i").longOpt("input").hasArg().desc("Events input file").build());
         cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulator's main loop (default value is 10).").build());
-        cmdLineOptions.addOption(
-                Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
+        cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
+        cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Selects between GUI or CONSOLE.").build());
         cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
 
         return cmdLineOptions;
@@ -77,6 +80,18 @@ public class Main {
         }
     }
 
+    private static void parseModeOption(CommandLine line) throws ParseException {
+        if (line.hasOption("m")) {
+            _mode = Mode.valueOf(line.getOptionValue("m").toUpperCase());
+            if (_mode != Mode.CONSOLE && _mode != Mode.GUI) {
+                throw new ParseException("Mode: " + _mode + " is not a supported mode.");
+            }
+        }
+        if (_mode == null) {
+            _mode = Mode.GUI;
+        }
+    }
+
     private static void parseTicksOption(CommandLine line) {
         if (line.hasOption("t")) {
             ticks = Integer.parseInt(line.getOptionValue("t"));
@@ -87,13 +102,15 @@ public class Main {
 
     private static void parseInFileOption(CommandLine line) throws ParseException {
         _inFile = line.getOptionValue("i");
-        if (_inFile == null) {
+        if (_inFile == null && _mode == Mode.CONSOLE) { //only in console its obligatory to provide an events file
             throw new ParseException("An events file is missing");
         }
     }
 
     private static void parseOutFileOption(CommandLine line) throws ParseException {
-        _outFile = line.getOptionValue("o");
+        if (_mode == Mode.CONSOLE) { //in gui mode this is ignored
+            _outFile = line.getOptionValue("o");
+        }
     }
 
     private static void initFactories() {
@@ -124,16 +141,30 @@ public class Main {
         if (_outFile != null)
             ou = new FileOutputStream(_outFile);
         c.loadEvents(in);
-        c.run(ticks , ou);
-        
+        c.run(ticks, ou);
+
+    }
+
+    private static void startGUIMode() throws IOException {
+        TrafficSimulator ts = new TrafficSimulator();
+        Controller c = new Controller(ts, _eventsFactory);
+        if (_inFile != null) {
+           FileInputStream in = new FileInputStream(new File(_inFile));
+       }
+        SwingUtilities.invokeLater(() -> new MainWindow(c));
     }
 
     private static void start(String[] args) throws IOException {
         initFactories();
         parseArgs(args);
-        startBatchMode();
+        if (_mode == Mode.CONSOLE) {
+            startBatchMode();
+        }
+        else {
+            startGUIMode();
+        }
     }
-    
+
     public static void main(String[] args) {
         try {
             start(args);
@@ -142,5 +173,7 @@ public class Main {
         }
 
     }
+
+    private enum Mode {GUI, CONSOLE}
 
 }

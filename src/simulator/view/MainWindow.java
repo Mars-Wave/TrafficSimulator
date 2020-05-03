@@ -28,6 +28,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void initGUI() {
+//Main panel setup
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		this.setContentPane(mainPanel);
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
@@ -44,8 +45,6 @@ public class MainWindow extends JFrame {
 		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(eventsView);
-//TODO add other tables
-//...
 		JPanel vehiclesView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Vehicles");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(vehiclesView);
@@ -59,11 +58,11 @@ public class MainWindow extends JFrame {
 		JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
-//TODO add a map for MapByRoadComponent
-//...
 		JPanel mapByRoadView = createViewPanel(new MapComponent(_ctrl), "Map by Road");
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapByRoadView);
+
+//settings
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);

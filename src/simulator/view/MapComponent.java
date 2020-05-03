@@ -56,7 +56,6 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 		// clear with a background color
 		g.setColor(_BG_COLOR);
 		g.clearRect(0, 0, getWidth(), getHeight());
-
 		if (_map == null || _map.getJunctions().size() == 0) {
 			g.setColor(Color.red);
 			g.drawString("No map yet!", getWidth() / 2 - 50, getHeight() / 2);

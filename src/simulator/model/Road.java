@@ -149,4 +149,7 @@ public abstract class Road extends SimulatedObject {
 
 	public abstract int calculateVehicleSpeed(Vehicle v);
 
+    public List<Vehicle> getVehicles(){
+    	return vehicles;
+	}
 }

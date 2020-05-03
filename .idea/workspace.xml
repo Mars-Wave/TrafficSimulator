@@ -35,7 +35,7 @@
   <component name="ProjectId" id="1Y2MMsSzbIxHUn5wrnLhmgyGbnz" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/json.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Software Engineering/Broker" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -59,7 +59,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="simulator.launcher.Main" />
       <module name="TrafficSimulatorTP" />
-      <option name="PROGRAM_PARAMETERS" value="-i resources/examples/ex1.json -o resources/tmp/ex1.out.json -t 300" />
+      <option name="PROGRAM_PARAMETERS" value="-i resources/examples/ex1.json -m gui" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method v="2">
@@ -95,10 +95,41 @@
       <workItem from="1584638039805" duration="2908000" />
       <workItem from="1584660842023" duration="6991000" />
       <workItem from="1584796599225" duration="7002000" />
+      <workItem from="1584807178626" duration="5727000" />
+      <workItem from="1585237095180" duration="7000" />
+      <workItem from="1585504446099" duration="119000" />
+      <workItem from="1585504647996" duration="49000" />
+      <workItem from="1585504890426" duration="413000" />
+      <workItem from="1585596138683" duration="514000" />
+      <workItem from="1585829168076" duration="780000" />
+      <workItem from="1585831669906" duration="684000" />
+      <workItem from="1586799479838" duration="334000" />
+      <workItem from="1587039134984" duration="53000" />
+      <workItem from="1587043675583" duration="46000" />
+      <workItem from="1587561518956" duration="9000" />
+      <workItem from="1587735717393" duration="90000" />
+      <workItem from="1587736492068" duration="31000" />
+      <workItem from="1588517881052" duration="4000" />
+      <workItem from="1588517890204" duration="5000" />
+      <workItem from="1588518030700" duration="5377000" />
     </task>
     <servers />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/simulator/model/CityRoad.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/simulator/launcher/Main.java</url>
+          <line>158</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="item" />
