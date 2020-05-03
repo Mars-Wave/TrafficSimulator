@@ -44,7 +44,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		initFC();
 		initSCC();
 		initSWC();
-		// do rest of stuff
 		initRunButton();
 		initStopButton();
 		ticksSpinner();
@@ -52,8 +51,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	}
 
 	private void initExitButton() {
-		JButton exit = new JButton();
-		exit.setIcon(new ImageIcon("resources/icons/exit.png"));
+		JButton exit = new JButton(new ImageIcon("resources/icons/exit.png"));
 		exit.addActionListener((e) -> {
 			int n = JOptionPane.showOptionDialog(this, "Are sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -131,6 +129,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			enableToolBar(true);
 			stop();
 		});
+
 		this.add(stopButton);
 	}
 
