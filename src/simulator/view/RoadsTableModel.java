@@ -1,98 +1,109 @@
 package simulator.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import simulator.control.Controller;
-import simulator.model.Event;
-import simulator.model.Road;
-import simulator.model.RoadMap;
-import simulator.model.TrafficSimObserver;
+import simulator.model.*;
 
 public class RoadsTableModel extends AbstractTableModel implements TrafficSimObserver{
 
-	private int colCount = 7;
-	private int rowCount = 0;
-	
+
+	private List<Road> _roads;
+	private String[] _colNames = {"Id", "Length", "Weather", "Max. Speed", "Speed Limit", "Total CO2", "CO2 Limit"};
+
+
 	public RoadsTableModel(Controller ctrl) {
 		ctrl.addObserver(this);
-		init();
-	}
-	
-	private void init() {
-		// TODO Auto-generated method stub
-		setValueAt("Id", rowCount, 0);
-		setValueAt("Length", rowCount, 1);
-		setValueAt("Weather", rowCount, 2);
-		setValueAt("Max.Speed", rowCount, 3);
-		setValueAt("Speed Limit", rowCount, 4);
-		setValueAt("Total CO2", rowCount, 5);
-		setValueAt("CO2 Limit", rowCount, 6);
-		rowCount++;
-	}
-	
-	@Override
-	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return colCount;
+		_roads = new ArrayList<>();
 	}
 
-	@Override
-	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return rowCount;
-	}
-	
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getColumnName(int column) {
+		return _colNames[column];
 	}
 
-	@Override
-	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		for(Road r : map.getRoads()) {
-			setValueAt(r.getId(), rowCount, 0);
-			setValueAt(r.getLength(), rowCount, 1);
-			setValueAt(r.getWeather().toString(), rowCount, 2);
-			setValueAt(r.getMaxSpeed(), rowCount, 3);
-			setValueAt(r.getSpeedLimit(), rowCount, 4);
-			setValueAt(r.getTotalCont(), rowCount, 5);
-			setValueAt(r.getContLimit(), rowCount, 6);
-			rowCount++;
-		}
-	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
+		_roads = new ArrayList<>();
+		update();
 	}
-
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onError(String err) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	public void update() {
+		fireTableDataChanged();
+	}
+
+	public void setVehiclesList(List<Road> Roads) {
+		_roads = Roads;
+		update();
+	}
+
+	@Override
+	public int getColumnCount() {
+		return _colNames.length;
+	}
+
+	@Override
+	public int getRowCount() {
+		return _roads == null ? 0 : _roads.size();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Object s = null;
+		switch (columnIndex) {
+			case 0:
+				s = _roads.get(rowIndex).getId();
+				break;
+			case 1:
+				s = _roads.get(rowIndex).getLength();
+				break;
+			case 2:
+				s = _roads.get(rowIndex).getWeather();
+				break;
+			case 3:
+				s = _roads.get(rowIndex).getMaxSpeed();
+				break;
+			case 4:
+				s = _roads.get(rowIndex).getSpeedLimit();
+				break;
+			case 5:
+				s = _roads.get(rowIndex).getTotalCont();
+				break;
+			case 6:
+				s = _roads.get(rowIndex).getContLimit();
+				break;
+		}
+		return s;
+	}
+
+	@Override
+	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
+		_roads = map.getRoads();
+		update();
+	}
 }
