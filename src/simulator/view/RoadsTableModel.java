@@ -12,12 +12,11 @@ import simulator.model.TrafficSimObserver;
 
 public class RoadsTableModel extends AbstractTableModel implements TrafficSimObserver{
 
-	private Controller _ctrl;
 	private int colCount = 7;
 	private int rowCount = 0;
 	
-	public RoadsTableModel(Controller controller) {
-		_ctrl = controller;
+	public RoadsTableModel(Controller ctrl) {
+		ctrl.addObserver(this);
 		init();
 	}
 	

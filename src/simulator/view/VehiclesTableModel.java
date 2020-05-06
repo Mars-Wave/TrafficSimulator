@@ -1,118 +1,117 @@
 package simulator.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import simulator.control.Controller;
-import simulator.model.Event;
-import simulator.model.RoadMap;
-import simulator.model.TrafficSimObserver;
-import simulator.model.Vehicle;
-import simulator.model.VehicleStatus;
+import simulator.model.*;
 
 public class VehiclesTableModel extends AbstractTableModel implements TrafficSimObserver{
 
-	private Controller _ctrl;
-	private int colCount = 8;
-	private int rowCount = 0;
-	
-	public VehiclesTableModel(Controller controller) {
-		_ctrl = controller;
-		init();
-	}
-	
-	private void init() {
-		// TODO Auto-generated method stub
-		setValueAt("Id", rowCount, 0);
-		setValueAt("Location", rowCount, 1);
-		setValueAt("Itinerary", rowCount, 2);
-		setValueAt("CO2 Class", rowCount, 3);
-		setValueAt("Max.Speed", rowCount, 4);
-		setValueAt("Speed", rowCount, 5);
-		setValueAt("Total CO2", rowCount, 6);
-		setValueAt("Distance", rowCount, 7);
-		rowCount++;
+
+
+	private List<Vehicle> _vehicles;
+	private String[] _colNames = {"Id", "Location", "Itinerary", "CO2 Class", "Max. Speed", "Speed", "Total CO2", "Distance"};
+
+
+
+	public VehiclesTableModel(Controller ctrl) {
+		ctrl.addObserver(this);
+		_vehicles = new ArrayList<>();
 	}
 
-	@Override
-	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return colCount;
+	public String getColumnName(int column) {
+		return _colNames[column];
 	}
 
-	@Override
-	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return rowCount;
-	}
-
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		for(Vehicle v : map.getVehicles()) {
-			setValueAt(v.getId(), rowCount, 0);
-			switch(v.getStatus()) {
-			case PENDING:
-				setValueAt("Pending", rowCount, 1);
-					break;
-			case TRAVELING:
-				setValueAt(v.getRoad().getId() + ":" + v.getLocation(), rowCount, 1);
-					break;
-			case WAITING:
-				setValueAt("WAITING:" + v.getItinerary().get(v.getCurrentJunc()).getId(), rowCount, 1);	// eZ
-					break;
-			case ARRIVED:
-				setValueAt("Arrived", rowCount, 1);
-					break;
-			}
-			setValueAt(v.getItinerary(), rowCount, 2);	// Probably not going to output [junction, junction, ...] might need to fix?
-			setValueAt(v.getContClass(), rowCount, 3);
-			setValueAt(v.getMaxSpeed(), rowCount, 4);
-			setValueAt(v.getCurrentSpeed(), rowCount, 5);
-			setValueAt(v.getTotalCont(), rowCount, 6);
-			setValueAt(v.getTotalDist(), rowCount, 7);
-			rowCount++;
-		}
-		
-		
-		
-	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub	// events.indexOf(e)
-		
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onError(String err) {
 		// TODO Auto-generated method stub
-		
+
+	}
+	public void update() {
+		fireTableDataChanged();
+	}
+
+	public void setVehiclesList(List<Vehicle> vehicles) {
+		_vehicles = vehicles;
+		update();
+	}
+
+	@Override
+	public int getColumnCount() {
+		return _colNames.length;
+	}
+
+	@Override
+	public int getRowCount() {
+		return _vehicles == null ? 0 : _vehicles.size();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Object s = null;
+		switch (columnIndex) {
+			case 0:
+				s = _vehicles.get(rowIndex).getId();
+				break;
+			case 1:
+				s = _vehicles.get(rowIndex).getLocation();
+				break;
+			case 2:
+				s = _vehicles.get(rowIndex).getItinerary();
+				break;
+			case 3:
+				s = _vehicles.get(rowIndex).getContClass();
+				break;
+			case 4:
+				s = _vehicles.get(rowIndex).getMaxSpeed();
+				break;
+			case 5:
+				s = _vehicles.get(rowIndex).getCurrentSpeed();
+				break;
+			case 6:
+				s = _vehicles.get(rowIndex).getTotalCont();
+				break;
+			case 7:
+				s = _vehicles.get(rowIndex).getTotalDist();
+				break;
+
+		}
+		return s;
+	}
+
+	@Override
+	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
+		// TODO Auto-generated method stub
+		_vehicles = map.getVehicles();
+		update();
 	}
 
 }

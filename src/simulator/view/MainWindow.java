@@ -15,7 +15,6 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import extra.jtable.EventsTableModel;
 import simulator.control.Controller;
 
 public class MainWindow extends JFrame {
@@ -45,13 +44,13 @@ public class MainWindow extends JFrame {
 		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(eventsView);
-		JPanel vehiclesView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Vehicles");
+		JPanel vehiclesView = createViewPanel(new JTable( new VehiclesTableModel(_ctrl)), "Vehicles");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(vehiclesView);
-		JPanel roadsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Roads");
+		JPanel roadsView = createViewPanel(new JTable(new RoadsTableModel(_ctrl)), "Roads");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(roadsView);
-		JPanel junctionsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Junctions");
+		JPanel junctionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Junctions");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(junctionsView);
 //maps

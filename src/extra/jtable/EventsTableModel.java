@@ -31,7 +31,7 @@ public class EventsTableModel extends AbstractTableModel {
 		// en este caso de un ArrayList, hay que notificar los cambios.
 		
 		// We need to notify changes, otherwise the table does not refresh.
-		fireTableDataChanged();;		
+		fireTableDataChanged();
 	}
 	
 	public void setEventsList(List<EventEx> events) {

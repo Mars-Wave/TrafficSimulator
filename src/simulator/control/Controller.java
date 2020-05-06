@@ -34,16 +34,23 @@ public class Controller {
     }
 
     public void run(int n, OutputStream out) {
-        PrintStream p = new PrintStream(out);
-        p.println("{ " + "\"" + "states" + "\"" + ":[");
-        for (int i = 0; i < n; i++) {
-            sim.advance();
-            p.print(sim.report().toString(4));
-            if (i != n - 1) {
-                p.print(",");
+        if (out != null) {
+            PrintStream p = new PrintStream(out);
+            p.println("{ " + "\"" + "states" + "\"" + ":[");
+            for (int i = 0; i < n; i++) {
+                sim.advance();
+                p.print(sim.report().toString(4));
+                if (i != n - 1) {
+                    p.print(",");
+                }
+            }
+            p.println("]}");
+        }
+        else {
+            for (int i = 0; i < n; i++) {
+                sim.advance();
             }
         }
-        p.println("]}");
     }
 
     public void reset() {
@@ -63,7 +70,6 @@ public class Controller {
     }
 
     public void run(int n) {    //Laters
-        // TODO Auto-generated method stub
         run(n, null);
     }
 
