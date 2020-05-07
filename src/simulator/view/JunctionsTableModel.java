@@ -1,11 +1,17 @@
 package simulator.view;
 
-import simulator.control.Controller;
-import simulator.model.*;
-
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.table.AbstractTableModel;
+
+import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.Junction;
+import simulator.model.Road;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 public class JunctionsTableModel extends AbstractTableModel implements TrafficSimObserver {
 
@@ -90,7 +96,9 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
             case 2:
                 String aux = "";
                 for (Road r : _junctions.get(rowIndex).getInRoads()) {
-                    aux += r.getId() + ":" + r.getVehicles() + " ";
+                	String vListString = r.getDest().vListString(r.getDest().getMapRq().get(r.getId()));
+                	
+                    aux += r.getId() + ":" + vListString;
                 }
                 s = aux;
                 break;

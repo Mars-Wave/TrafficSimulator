@@ -133,6 +133,18 @@ public class Junction extends SimulatedObject {
 		// TODO Auto-generated method stub
 		return rqmap;
 	}
+	
+	public String vListString(List<Vehicle> vList) {
+		String vString = "";
+		if(vList != null) {
+			for(Vehicle v : vList) {
+				vString += v.getId();
+			}
+			return vString;
+		}
+		else return " [] ";
+	}
+	
 
     public List<List<Vehicle>> getQs() {
         return qs;

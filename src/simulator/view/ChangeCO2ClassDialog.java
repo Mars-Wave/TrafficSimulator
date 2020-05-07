@@ -30,7 +30,7 @@ public class ChangeCO2ClassDialog extends JDialog{
 	public void initGUI() {
 		JPanel contClassPanel = new JPanel(new BorderLayout());
 		JLabel contClassLabel = new JLabel("<html><p>Schedule an event to change the weather of a road after a given number of simulation ticks from now.</p></html>");
-		contClassPanel.setPreferredSize(new Dimension(200,100));
+		contClassPanel.setPreferredSize(new Dimension(400,200));
 		// Page start
 		contClassPanel.add(contClassLabel, BorderLayout.PAGE_START);
 		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -59,10 +59,11 @@ public class ChangeCO2ClassDialog extends JDialog{
 		Pair<String, Integer> p = new Pair(vehList.getSelectedItem(), co2list.getSelectedItem());
 		cs.add(p);
 		okButton.addActionListener((e) -> {controller.addEvent(new SetContClassEvent((Integer)spin.getValue(), cs));});	// null treatment?
+		bottomPanel.add(okButton);
 		bottomPanel.add(cancelButton);
-
+		this.add(bottomPanel, BorderLayout.PAGE_END);
 		this.setTitle("Change CO2 Class");
-		this.setSize(new Dimension(350,110));
+		this.setSize(new Dimension(350,140));
 		this.setVisible(false);
 		this.add(contClassPanel);
 		this.setResizable(false);

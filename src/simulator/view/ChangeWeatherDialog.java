@@ -32,7 +32,7 @@ public class ChangeWeatherDialog extends JDialog{
 		//
 		JPanel contClassPanel = new JPanel(new BorderLayout());
 		JLabel contClassLabel = new JLabel("<html><p>Schedule an event to change the weather of a road after a given number of simulation ticks from now.</p></html>");
-		contClassPanel.setPreferredSize(new Dimension(200,100));
+		contClassPanel.setPreferredSize(new Dimension(400,200));
 		// Page start
 		contClassPanel.add(contClassLabel, BorderLayout.PAGE_START);
 		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -61,10 +61,11 @@ public class ChangeWeatherDialog extends JDialog{
 		Pair<String, Weather> p = new Pair(rList.getSelectedItem(), weatherlist.getSelectedItem());
 		ws.add(p);
 		okButton.addActionListener((e) -> {controller.addEvent(new SetWeatherEvent((Integer)spin.getValue(), ws));});	// null treatment?
+		bottomPanel.add(okButton);
 		bottomPanel.add(cancelButton);
-		
+		this.add(bottomPanel, BorderLayout.PAGE_END);
 		this.setTitle("Change Road Weather");
-		this.setSize(new Dimension(350,110));
+		this.setSize(new Dimension(350,140));
 		this.setVisible(false);
 		this.add(contClassPanel);
 		this.setResizable(false);
