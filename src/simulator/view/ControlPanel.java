@@ -1,21 +1,33 @@
 package simulator.view;
 
-import simulator.control.Controller;
-import simulator.model.Event;
-import simulator.model.RoadMap;
-import simulator.model.TrafficSimObserver;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SwingUtilities;
+
+import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
+
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     private Controller controller;
+    private JPanel leftPanel;
+    private JPanel rightPanel; 
     private JFileChooser fc;
     private RoadMap rMap;
     private JSpinner tickSpinner;
@@ -27,12 +39,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     public ControlPanel(Controller cont) {
         controller = cont;
         controller.addObserver(this);
-        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+        this.setLayout(new BorderLayout());
         bs = new ArrayList<>();
         initContP();
     }
 
     private void initContP() {
+    	init();
         initFC();
         initSCC();
         initSWC();
@@ -42,7 +55,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         initExitButton();
     }
 
-    private void initExitButton() {
+    private void init() {
+		leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		rightPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.add(leftPanel, BorderLayout.WEST);
+		this.add(rightPanel, BorderLayout.EAST);
+	}
+
+	private void initExitButton() {
         JButton exit = new JButton(new ImageIcon("resources/icons/exit.png"));
         exit.addActionListener((e) -> {
             int n = JOptionPane.showOptionDialog(this, "Are sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION,
@@ -51,7 +71,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 System.exit(0);
             }
         });
-        this.add(exit, FlowLayout.RIGHT);
+        rightPanel.add(exit);
     }
 
     private void initFC() {
@@ -77,7 +97,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             }
         });
         bs.add(loadButton);
-        this.add(loadButton);
+        leftPanel.add(loadButton);
 
     }
 
@@ -89,7 +109,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             this.SCC.setVisible(true);
         });
         bs.add(sccButton);
-        this.add(sccButton);
+        leftPanel.add(sccButton);
     }
 
     private void initSWC() {
@@ -100,7 +120,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             SWC.setVisible(true);
         });
         bs.add(swcButton);
-        this.add(swcButton);
+        leftPanel.add(swcButton);
     }
 
     private void initRunButton() {
@@ -112,7 +132,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             enableToolBar(false);
         });
         bs.add(runButton);
-        this.add(runButton);
+        leftPanel.add(runButton);
     }
 
     private void initStopButton() {
@@ -123,7 +143,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             stop();
         });
 
-        this.add(stopButton);
+        leftPanel.add(stopButton);
     }
 
     private void ticksSpinner() {
@@ -131,7 +151,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         this.add(ticksLabel);
         tickSpinner = new JSpinner();
         tickSpinner.setPreferredSize(new Dimension(50, 25));
-        this.add(tickSpinner);
+        leftPanel.add(tickSpinner);
     }
 
     private void run_sim(int n) {
