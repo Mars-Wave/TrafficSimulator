@@ -1,45 +1,41 @@
 package simulator.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.*;
 
 import simulator.control.Controller;
 import simulator.misc.Pair;
+import simulator.model.Road;
 import simulator.model.SetWeatherEvent;
+import simulator.model.Vehicle;
 import simulator.model.Weather;
 
 public class ChangeWeatherDialog extends JDialog{
 	
 	private Controller controller;
-	private String names[] = {};
+	private JComboBox<String> rList;
 	
 	public ChangeWeatherDialog(Controller controller) {
 		this.controller = controller;
+		rList = new JComboBox<>();
 		initGUI();
+		this.pack();
 	}
 	
 	public void initGUI() {
 		//
 		JPanel contClassPanel = new JPanel(new BorderLayout());
 		JLabel contClassLabel = new JLabel("<html><p>Schedule an event to change the weather of a road after a given number of simulation ticks from now.</p></html>");
-		contClassPanel.setPreferredSize(new Dimension(400,200));
 		// Page start
 		contClassPanel.add(contClassLabel, BorderLayout.PAGE_START);
 		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel roadLabel = new JLabel("Road:");
 		centerPanel.add(roadLabel);
-		JComboBox<String> rList = new JComboBox(names);
 		centerPanel.add(rList);
+		rList.setEditable(true);
 		//for to load names
 		JLabel weatherLabel = new JLabel("Weather:");
 		centerPanel.add(weatherLabel);
@@ -70,9 +66,11 @@ public class ChangeWeatherDialog extends JDialog{
 		this.add(contClassPanel);
 		this.setResizable(false);
 	}
-	
-	public void loadNames(String names[]) {
-			this.names = names;
+
+	public void setrList(List<Road> rList) {
+		this.rList.isEditable();
+		for (Road r : rList){
+			this.rList.addItem(r.getId());
+		}
 	}
-	
 }

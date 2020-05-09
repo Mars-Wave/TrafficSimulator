@@ -34,7 +34,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private boolean _stopped;
     private ArrayList<JButton> bs;
     private JButton stopButton;
-	ChangeCO2ClassDialog SCC;
+    private ChangeWeatherDialog SWC;
+	private ChangeCO2ClassDialog SCC;
 
     public ControlPanel(Controller cont) {
         controller = cont;
@@ -113,11 +114,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void initSWC() {
-        ChangeWeatherDialog SWC = new ChangeWeatherDialog(controller);
+        this.SWC = new ChangeWeatherDialog(controller);
         JButton swcButton = new JButton();
         swcButton.setIcon(new ImageIcon("resources/icons/weather.png"));
         swcButton.addActionListener((e) -> {
-            SWC.setVisible(true);
+            this.SWC.setVisible(true);
         });
         bs.add(swcButton);
         leftPanel.add(swcButton);
@@ -184,8 +185,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-        // TODO Auto-generated method stub
-
+        SCC.setVehList(map.getVehicles());
+        SWC.setrList(map.getRoads());
     }
 
     @Override
@@ -196,16 +197,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-        // TODO Auto-generated method stub
-		if (e.toString().startsWith("v")){
-			SCC.addVehicle(e.toString());
-		}
+        //SCC.setVehList(map.getVehicles());
     }
 
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
-        // TODO Auto-generated method stub
-
+        SCC.setVehList(map.getVehicles());
     }
 
     @Override

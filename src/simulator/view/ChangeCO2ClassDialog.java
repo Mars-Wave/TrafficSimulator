@@ -16,6 +16,7 @@ import javax.swing.JSpinner;
 import simulator.control.Controller;
 import simulator.misc.Pair;
 import simulator.model.SetContClassEvent;
+import simulator.model.Vehicle;
 
 public class ChangeCO2ClassDialog extends JDialog{
 	
@@ -24,21 +25,21 @@ public class ChangeCO2ClassDialog extends JDialog{
 	
 	public ChangeCO2ClassDialog(Controller controller) {
 		this.controller = controller;
+		this.vehList = new JComboBox<>();
 		initGUI();
+		this.pack();
 	}
 	
 	public void initGUI() {
 		JPanel contClassPanel = new JPanel(new BorderLayout());
 		JLabel contClassLabel = new JLabel("<html><p>Schedule an event to change the weather of a road after a given number of simulation ticks from now.</p></html>");
-		contClassPanel.setPreferredSize(new Dimension(400,200));
 		// Page start
 		contClassPanel.add(contClassLabel, BorderLayout.PAGE_START);
 		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel vehicleLabel = new JLabel("Vehicle:");
 		centerPanel.add(vehicleLabel);
-		this.vehList = new JComboBox<String>();
 		centerPanel.add(vehList);
-		//for to load names
+		vehList.setEditable(true);
 		JLabel co2Label = new JLabel("CO2 Class:");
 		centerPanel.add(co2Label);
 		Integer numbers[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -68,9 +69,11 @@ public class ChangeCO2ClassDialog extends JDialog{
 		this.add(contClassPanel);
 		this.setResizable(false);
 	}
-	
-	public void addVehicle(String id) {
-		this.vehList.addItem(id);
+
+	public void setVehList(List<Vehicle> vehList) {
+		this.vehList.isEditable();
+		for (Vehicle v : vehList){
+			this.vehList.addItem(v.getId());
+		}
 	}
-	
 }
