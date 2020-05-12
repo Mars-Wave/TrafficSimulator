@@ -22,6 +22,7 @@ public class ChangeCO2ClassDialog extends JDialog{
 	
 	private Controller controller;
 	private JComboBox<String> vehList;
+	private int _simTime;
 	
 	public ChangeCO2ClassDialog(Controller controller) {
 		this.controller = controller;
@@ -61,7 +62,7 @@ public class ChangeCO2ClassDialog extends JDialog{
 		okButton.addActionListener((e) -> {
 			Pair<String, Integer> p = new Pair(vehList.getSelectedItem(), co2list.getSelectedItem());
 			cs.add(p);
-			controller.addEvent(new SetContClassEvent((Integer)spin.getValue(), cs));
+			controller.addEvent(new SetContClassEvent(((Integer)spin.getValue() + _simTime), cs));
 			this.setVisible(false);
 			}
 		);	// null treatment?
@@ -81,6 +82,11 @@ public class ChangeCO2ClassDialog extends JDialog{
 		for (Vehicle v : vList){
 			vehList.addItem(v.getId());
 		}
+		
+	}
+
+	public void updateTime(int time) {
+		_simTime = time;
 		
 	}
 }

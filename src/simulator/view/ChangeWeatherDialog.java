@@ -17,6 +17,7 @@ public class ChangeWeatherDialog extends JDialog{
 	
 	private Controller controller;
 	private JComboBox<String> rList;
+	private int _simTime;
 	
 	public ChangeWeatherDialog(Controller controller) {
 		this.controller = controller;
@@ -57,7 +58,7 @@ public class ChangeWeatherDialog extends JDialog{
 		okButton.addActionListener((e) -> {
 			Pair<String, Weather> p = new Pair(rList.getSelectedItem(), weatherlist.getSelectedItem());
 			ws.add(p);
-			controller.addEvent(new SetWeatherEvent((Integer)spin.getValue(), ws));
+			controller.addEvent(new SetWeatherEvent(((Integer)spin.getValue() + _simTime), ws));
 			this.setVisible(false);
 			}
 		);	// null treatment?
@@ -77,5 +78,10 @@ public class ChangeWeatherDialog extends JDialog{
 		for (Road r : rList){
 			this.rList.addItem(r.getId());
 		}
+	}
+	
+	public void updateTime(int time) {
+		_simTime = time;
+		
 	}
 }
