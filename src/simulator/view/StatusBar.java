@@ -24,17 +24,27 @@ public class StatusBar extends JPanel implements TrafficSimObserver{
 	public StatusBar(Controller _ctrl) {
 		// TODO Auto-generated constructor stub
 		controller = _ctrl;
+		_ctrl.addObserver(this);
 		initGUI();
 	}
 
 	private void initGUI() {
 		// TODO Auto-generated method stub
+		this.setVisible(true);
+		this.setPreferredSize(new Dimension(25,25));
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		simTimeLabel = new JLabel();
+		simTimeLabel = new JLabel("Time: 0");
 		this.add(simTimeLabel);
-		this.add(Box.createRigidArea(new Dimension(10, 0)));
-		this.add(new JSeparator(SwingConstants.VERTICAL));
-		eventLabel = new JLabel();
+		this.add(Box.createRigidArea(new Dimension(150, 0)));
+		JSeparator separator = new JSeparator(){
+		    @Override
+		    public Dimension getMaximumSize(){
+		        return new Dimension(5, 25);
+		    }
+		};
+		separator.setOrientation(JSeparator.VERTICAL);
+		this.add(separator);
+		eventLabel = new JLabel("Welcome!");
 		this.add(eventLabel);
 	}
 

@@ -89,7 +89,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                         in = new FileInputStream(file);
                         controller.reset();
                         controller.loadEvents(in);
-                    } catch (FileNotFoundException e1) {
+                    } catch (FileNotFoundException e1) {	// Exception treatment
                         JOptionPane.showMessageDialog(this, "File does not exist", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
