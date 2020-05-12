@@ -72,7 +72,8 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
                     g.setColor(new Color(0, vLabelColor, 0));
 
                     // draw an image of a car (with circle as background) and its identifier
-                    int carX = (this.getWidth() - 100) * (v.getLocation() / r.getLength()); //Check X calculation
+                    //int carX = (this.getWidth() - 100) * (v.getLocation() / r.getLength()); //Check X calculation
+                    int carX = 50 + (int) ((getWidth()-100 - 50) * ((double) v.getLocation()/ (double)v.getRoad().getLength())); //Check X calculation
                     g.fillOval(carX - 1, (i + 1) * 50 - 6, 14, 14);
                     g.drawImage(_car, carX, (i + 1) * 50 - 6, 12, 12, this);
                     g.drawString(v.getId(), carX, (i + 1) * 50 - 6);
