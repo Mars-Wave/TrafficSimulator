@@ -66,6 +66,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	}
 
 	public void setEventsList(List<Event> events) {
+		
 		_events = events;
 		update();
 	}

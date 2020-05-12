@@ -39,8 +39,8 @@ public class ChangeWeatherDialog extends JDialog{
 		//for to load names
 		JLabel weatherLabel = new JLabel("Weather:");
 		centerPanel.add(weatherLabel);
-		String weathers[] = Weather.names();
-		JComboBox<String> weatherlist = new JComboBox(weathers);
+		Weather weathers[] = Weather.weathers();
+		JComboBox<Weather> weatherlist = new JComboBox(weathers);
 		centerPanel.add(weatherlist);
 		JLabel ticksLabel = new JLabel("Ticks:");
 		centerPanel.add(ticksLabel);
@@ -54,9 +54,13 @@ public class ChangeWeatherDialog extends JDialog{
 		bottomPanel.add(cancelButton);
 		JButton okButton = new JButton("OK");
 		List<Pair<String, Weather>> ws = new ArrayList();
-		Pair<String, Weather> p = new Pair(rList.getSelectedItem(), weatherlist.getSelectedItem());
-		ws.add(p);
-		okButton.addActionListener((e) -> {controller.addEvent(new SetWeatherEvent((Integer)spin.getValue(), ws));});	// null treatment?
+		okButton.addActionListener((e) -> {
+			Pair<String, Weather> p = new Pair(rList.getSelectedItem(), weatherlist.getSelectedItem());
+			ws.add(p);
+			controller.addEvent(new SetWeatherEvent((Integer)spin.getValue(), ws));
+			this.setVisible(false);
+			}
+		);	// null treatment?
 		bottomPanel.add(okButton);
 		bottomPanel.add(cancelButton);
 		this.add(bottomPanel, BorderLayout.PAGE_END);
@@ -69,6 +73,7 @@ public class ChangeWeatherDialog extends JDialog{
 
 	public void setrList(List<Road> rList) {
 		this.rList.isEditable();
+		this.rList.removeAllItems();
 		for (Road r : rList){
 			this.rList.addItem(r.getId());
 		}

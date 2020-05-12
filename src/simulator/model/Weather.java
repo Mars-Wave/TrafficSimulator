@@ -6,8 +6,9 @@ public enum Weather {
 	SUNNY, CLOUDY, RAINY, WINDY, STORM;
 	private static final String[] weathers = {"SUNNY", "CLOUDY", "RAINY", "WINDY", "STORM"};
 
-	public static String[] names() {
-		return weathers;
+	public static Weather[] weathers() {
+		Weather[] weatherList = {Weather.SUNNY, Weather.CLOUDY, Weather.RAINY, Weather.WINDY, Weather.STORM};
+		return weatherList;
 	}
 
 
