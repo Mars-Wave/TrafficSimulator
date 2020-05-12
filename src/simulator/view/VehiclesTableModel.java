@@ -83,7 +83,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 				s = _vehicles.get(rowIndex).getId();
 				break;
 			case 1:
-				s = _vehicles.get(rowIndex).getLocation();
+				s = _vehicles.get(rowIndex).getRoad().getId() + ":" +_vehicles.get(rowIndex).getLocation();
 				break;
 			case 2:
 				s = _vehicles.get(rowIndex).getItinerary();

@@ -59,7 +59,7 @@ public class ChangeCO2ClassDialog extends JDialog{
 		List<Pair<String, Integer>> cs = new ArrayList<>();
 		Pair<String, Integer> p = new Pair(vehList.getSelectedItem(), co2list.getSelectedItem());
 		cs.add(p);
-		okButton.addActionListener((e) -> {controller.addEvent(new SetContClassEvent((Integer)spin.getValue(), cs));});	// null treatment?
+		okButton.addActionListener((e) -> {controller.addEvent(new SetContClassEvent((Integer)spin.getValue(), cs)); this.setVisible(false);});	// null treatment?
 		bottomPanel.add(okButton);
 		bottomPanel.add(cancelButton);
 		this.add(bottomPanel, BorderLayout.PAGE_END);
@@ -70,10 +70,11 @@ public class ChangeCO2ClassDialog extends JDialog{
 		this.setResizable(false);
 	}
 
-	public void setVehList(List<Vehicle> vehList) {
-		this.vehList.isEditable();
-		for (Vehicle v : vehList){
-			this.vehList.addItem(v.getId());
+	public void setVehList(List<Vehicle> vList) {
+		vehList.isEditable();
+		vehList.removeAllItems();
+		for (Vehicle v : vList){
+			vehList.addItem(v.getId());
 		}
 	}
 }
