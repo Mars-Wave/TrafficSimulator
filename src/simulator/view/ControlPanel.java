@@ -129,8 +129,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         runButton.setIcon(new ImageIcon("resources/icons/run.png"));
         runButton.addActionListener((e) -> {
             _stopped = false;
-            run_sim((Integer) tickSpinner.getValue());
             enableToolBar(false);
+            run_sim((Integer) tickSpinner.getValue());
         });
         bs.add(runButton);
         leftPanel.add(runButton);

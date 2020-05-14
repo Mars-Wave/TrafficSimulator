@@ -1,8 +1,8 @@
 package simulator.view;
 
 import simulator.control.Controller;
-import simulator.model.*;
 import simulator.model.Event;
+import simulator.model.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,8 +19,13 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
     private static final Color _JUNCTION_LABEL_COLOR = new Color(200, 100, 0);
     private static final Color _GREEN_LIGHT_COLOR = Color.GREEN;
     private static final Color _RED_LIGHT_COLOR = Color.RED;
-
     private Image _car;
+    private Image _storm;
+    private Image _wind;
+    private Image _rain;
+    private Image _cloud;
+    private Image _sun;
+
 
     private RoadMap _map;
 
@@ -33,6 +38,11 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
     private void initGUI() {
         _car = loadImage("car.png");
+        _storm = loadImage("storm.png");
+        _wind = loadImage("wind.png");
+        _rain = loadImage("rain.png");
+        _cloud = loadImage("cloud.png");
+        _sun = loadImage("sun.png");
     }
 
     public void paintComponent(Graphics graphics) {
@@ -73,7 +83,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
                     // draw an image of a car (with circle as background) and its identifier
                     //int carX = (this.getWidth() - 100) * (v.getLocation() / r.getLength()); //Check X calculation
-                    int carX = 50 + (int) ((getWidth()-100 - 50) * ((double) v.getLocation()/ (double)v.getRoad().getLength())); //Check X calculation
+                    int carX = 50 + (int) ((getWidth() - 100 - 50) * ((double) v.getLocation() / (double) v.getRoad().getLength())); //Check X calculation
                     g.fillOval(carX - 1, (i + 1) * 50 - 6, 14, 14);
                     g.drawImage(_car, carX, (i + 1) * 50 - 6, 12, 12, this);
                     g.drawString(v.getId(), carX, (i + 1) * 50 - 6);
@@ -82,6 +92,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
             //junction of origin
             g.setColor(_JUNCTION_COLOR);
             g.fillOval(50 - _JRADIUS / 2, (i + 1) * 50 - _JRADIUS / 2, _JRADIUS, _JRADIUS);
+            g.drawString(r.getSrc().getId(), 50, (i + 1) * 50 - 6);
             //destination junction
             Color jLightColor = _RED_LIGHT_COLOR;
             int idx = r.getDest().getGreenLightIndex();
@@ -90,6 +101,29 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
             }
             g.setColor(jLightColor);
             g.fillOval(this.getWidth() - 100 - _JRADIUS / 2, (i + 1) * 50 - _JRADIUS / 2, _JRADIUS, _JRADIUS);
+            g.drawString(r.getDest().getId(), this.getWidth() - 100, (i + 1) * 50 - 6);
+            Image imgaux = null;
+            switch (r.getWeather()) {
+                case SUNNY:
+                    imgaux = _sun;
+                    break;
+                case CLOUDY:
+                    imgaux = _cloud;
+                    break;
+                case RAINY:
+                    imgaux = _rain;
+                    break;
+                case WINDY:
+                    imgaux = _wind;
+                    break;
+                case STORM:
+                    imgaux = _storm;
+                    break;
+            }
+            g.drawImage(imgaux, this.getWidth() -100 + 16, (i + 1) * 50 - 16, 32, 32, this);
+            int C = (int) Math.floor(Math.min((double) r.getTotalCont() / (1.0 + r.getContLimit()), 1.0) / 0.19);
+            String aux = "cont_" + C + ".png";
+            g.drawImage(loadImage(aux), this.getWidth() -100 + (16+32), (i + 1) * 50 - 16, 32, 32, this);
             i++;
         }
     }
