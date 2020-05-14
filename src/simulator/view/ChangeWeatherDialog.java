@@ -74,7 +74,6 @@ public class ChangeWeatherDialog extends JDialog{
 	}
 
 	public void setrList(List<Road> rList) {
-		this.rList.isEditable();
 		this.rList.removeAllItems();
 		for (Road r : rList){
 			this.rList.addItem(r.getId());

@@ -76,12 +76,10 @@ public class ChangeCO2ClassDialog extends JDialog{
 	}
 
 	public void setVehList(List<Vehicle> vList) {
-		vehList.isEditable();
 		vehList.removeAllItems();
 		for (Vehicle v : vList){
 			vehList.addItem(v.getId());
 		}
-		
 	}
 
 	public void updateTime(int time) {
