@@ -56,10 +56,9 @@ public class ChangeCO2ClassDialog extends JDialog{
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener((e) -> {this.setVisible(false);});
 		bottomPanel.add(cancelButton);
-		JButton okButton = new JButton("OK");
-		List<Pair<String, Integer>> cs = new ArrayList<>();
-		
+		JButton okButton = new JButton("OK");		
 		okButton.addActionListener((e) -> {
+			List<Pair<String, Integer>> cs = new ArrayList<>();
 			Pair<String, Integer> p = new Pair(vehList.getSelectedItem(), co2list.getSelectedItem());
 			cs.add(p);
 			controller.addEvent(new SetContClassEvent(((Integer)spin.getValue() + _simTime), cs));

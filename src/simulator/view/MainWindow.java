@@ -29,6 +29,8 @@ public class MainWindow extends JFrame {
 	private void initGUI() {
 //Main panel setup
 		JPanel mainPanel = new JPanel(new BorderLayout());
+		this.setResizable(true);
+		
 		this.setContentPane(mainPanel);
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
 		mainPanel.add(new StatusBar(_ctrl), BorderLayout.PAGE_END);
@@ -60,6 +62,7 @@ public class MainWindow extends JFrame {
 		mapsPanel.add(mapByRoadView);
 
 //settings
+		this.setPreferredSize(new Dimension(1000,700));
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);

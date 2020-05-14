@@ -2,6 +2,7 @@ package simulator.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -95,11 +96,12 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 				break;
             case 2:
                 String aux = "";
-                for (Road r : _junctions.get(rowIndex).getInRoads()) {
-                	String vListString = r.getDest().vListString(r.getDest().getMapRq().get(r.getId()));
-                	
-                    aux += r.getId() + ":" + vListString;
+               for (Map.Entry<Road, List<Vehicle>> rq : _junctions.get(rowIndex).getMapRq().entrySet()) {
+                	//String vListString = r.getDest().vListString(r.getDest().getMapRq().get(r.getId()));
+                	String vListString = rq.getValue().toString();
+                    aux += rq.getKey().getId() + ":" + vListString;
                 }
+                
                 s = aux;
                 break;
         }
