@@ -1,41 +1,29 @@
 package simulator.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SwingUtilities;
-
-import simulator.control.Controller;
-import simulator.model.Event;
-import simulator.model.RoadMap;
-import simulator.model.TrafficSimObserver;
-
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     private Controller controller;
     private JPanel leftPanel;
-    private JPanel rightPanel; 
+    private JPanel rightPanel;
     private JFileChooser fc;
-    private RoadMap rMap;
     private JSpinner tickSpinner;
     private boolean _stopped;
-    private ArrayList<JButton> bs;
-    private JButton stopButton;
+    private ArrayList<JButton> bs; //buttons that will be nullified when stop occurs. This can be seen in EnableToolbar(bool)
     private ChangeWeatherDialog SWC;
-	private ChangeCO2ClassDialog SCC;
+    private ChangeCO2ClassDialog SCC;
 
     public ControlPanel(Controller cont) {
         controller = cont;
@@ -46,7 +34,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void initContP() {
-    	init();
+        init();
         initFC();
         initSCC();
         initSWC();
@@ -57,13 +45,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void init() {
-		leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		rightPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		this.add(leftPanel, BorderLayout.WEST);
-		this.add(rightPanel, BorderLayout.EAST);
-	}
+        leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        rightPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.add(leftPanel, BorderLayout.WEST);
+        this.add(rightPanel, BorderLayout.EAST);
+    }
 
-	private void initExitButton() {
+    private void initExitButton() {
         JButton exit = new JButton(new ImageIcon("resources/icons/exit.png"));
         exit.addActionListener((e) -> {
             int n = JOptionPane.showOptionDialog(this, "Are sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION,
@@ -89,7 +77,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                         in = new FileInputStream(file);
                         controller.reset();
                         controller.loadEvents(in);
-                    } catch (FileNotFoundException e1) {	// Exception treatment
+                    } catch (FileNotFoundException e1) {    // Exception treatment
                         JOptionPane.showMessageDialog(this, "File does not exist", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
@@ -103,7 +91,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void initSCC() {
-       this.SCC = new ChangeCO2ClassDialog(controller);
+        this.SCC = new ChangeCO2ClassDialog(controller);
         JButton sccButton = new JButton();
         sccButton.setIcon(new ImageIcon("resources/icons/co2class.png"));
         sccButton.addActionListener((e) -> {
@@ -137,13 +125,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void initStopButton() {
-        stopButton = new JButton();
+        JButton stopButton = new JButton();
         stopButton.setIcon(new ImageIcon("resources/icons/stop.png"));
         stopButton.addActionListener((e) -> {
             enableToolBar(true);
             stop();
         });
-
         leftPanel.add(stopButton);
     }
 
@@ -185,36 +172,34 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-    	SCC.updateTime(time);
-    	SWC.updateTime(time);
+        SCC.updateTime(time);
+        SWC.updateTime(time);
     }
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-        // TODO Auto-generated method stub
-    	 SCC.setVehList(map.getVehicles());
-         SWC.setrList(map.getRoads());
+        SCC.setVehList(map.getVehicles());
+        SWC.setrList(map.getRoads());
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-        //SCC.setVehList(map.getVehicles());
+        SCC.setVehList(map.getVehicles());
+        SWC.setrList(map.getRoads());
     }
 
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
         SCC.setVehList(map.getVehicles());
+        SWC.setrList(map.getRoads());
     }
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void onError(String err) {
-        // TODO Auto-generated method stub
     }
 
 }

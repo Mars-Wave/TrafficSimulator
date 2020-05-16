@@ -69,7 +69,7 @@ public class Controller {
         sim.addEvent(e);
     }
 
-    public void run(int n) {    //Laters
+    public void run(int n) {
         run(n, null);
     }
 

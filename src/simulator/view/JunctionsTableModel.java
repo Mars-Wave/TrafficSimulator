@@ -97,7 +97,6 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
             case 2:
                 String aux = "";
                for (Map.Entry<Road, List<Vehicle>> rq : _junctions.get(rowIndex).getMapRq().entrySet()) {
-                	//String vListString = r.getDest().vListString(r.getDest().getMapRq().get(r.getId()));
                 	String vListString = rq.getValue().toString();
                     aux += rq.getKey().getId() + ":" + vListString;
                 }

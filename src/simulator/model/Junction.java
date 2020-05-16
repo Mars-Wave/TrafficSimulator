@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import exception.negativeValue;
 import exception.roadMapCoherenceException;
 
-import java.awt.RenderingHints;
 import java.util.*;
 
 public class Junction extends SimulatedObject {
