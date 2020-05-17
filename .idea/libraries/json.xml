@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="json">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../TrafficSimulatorTP(1)/TrafficSimulatorTP/lib/json.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../TrafficSimulatorTP(1)/TrafficSimulatorTP/lib/json.jar!/doc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../TrafficSimulatorTP(1)/TrafficSimulatorTP/lib/json.jar!/" />
+    </SOURCES>
+  </library>
+</component>
