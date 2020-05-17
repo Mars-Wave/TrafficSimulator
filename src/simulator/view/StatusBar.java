@@ -13,6 +13,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 
     private JLabel simTimeLabel;
     private JLabel eventLabel;
+    private JLabel errorLabel;
 
     public StatusBar(Controller _ctrl) {
         _ctrl.addObserver(this);
@@ -36,6 +37,9 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
         this.add(separator);
         eventLabel = new JLabel("Welcome!");
         this.add(eventLabel);
+        this.add(Box.createRigidArea(new Dimension(500, 0)));
+        errorLabel = new JLabel(" ");
+        this.add(errorLabel);
     }
 
     @Override
@@ -62,6 +66,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 
     @Override
     public void onError(String err) {
+    	errorLabel.setText("Error :" + err);
     }
 
 }
