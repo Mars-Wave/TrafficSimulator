@@ -6,21 +6,25 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.FileInputStream;
 
 public class MainWindow extends JFrame {
     private Controller _ctrl;
 	private JPanel mapsPanel;
     private JPanel tablesPanel;
 
-    public MainWindow(Controller ctrl) {
+    public MainWindow(Controller ctrl, FileInputStream in, int ticks) {
         super("Traffic Simulator");
         _ctrl = ctrl;
-        initGUI();
+        initGUI(ticks);
+        if (in != null) {
+            _ctrl.loadEvents(in);
+        }
     }
 
-    private void initGUI() {
+    private void initGUI(int ticks) {
 //Main panel setup
-        initMainPanel();
+        initMainPanel(ticks);
 //tables
         initTables();
 //maps
@@ -30,6 +34,7 @@ public class MainWindow extends JFrame {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.pack();
         this.setVisible(true);
+
     }
 
 	private void initMaps() {
@@ -78,11 +83,11 @@ public class MainWindow extends JFrame {
         tablesPanel.add(eventsView);
     }
 
-    private void initMainPanel() {
+    private void initMainPanel(int ticks) {
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.setResizable(true);
         this.setContentPane(mainPanel);
-        mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
+        mainPanel.add(new ControlPanel(_ctrl, ticks), BorderLayout.PAGE_START);
         mainPanel.add(new StatusBar(_ctrl), BorderLayout.PAGE_END);
 		JPanel viewsPanel = new JPanel(new GridLayout(1, 2));
         mainPanel.add(viewsPanel, BorderLayout.CENTER);
@@ -97,7 +102,6 @@ public class MainWindow extends JFrame {
     private JPanel createViewPanel(JComponent c, String title) {
         JPanel p = new JPanel(new BorderLayout());
         Border b = BorderFactory.createLineBorder(Color.black, 2);
-//TODO add a framed border to p with title
         p.setBorder(BorderFactory.createTitledBorder(b, title, TitledBorder.LEFT, TitledBorder.TOP));
         p.add(new JScrollPane(c));
         return p;

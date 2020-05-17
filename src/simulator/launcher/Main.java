@@ -133,7 +133,7 @@ public class Main {
 
     }
 
-    private static void startBatchMode() throws IOException {
+    private static void startBatchMode() throws Exception {
         FileInputStream in = new FileInputStream(new File(_inFile));
         TrafficSimulator ts = new TrafficSimulator();
         Controller c = new Controller(ts, _eventsFactory);
@@ -148,19 +148,21 @@ public class Main {
     private static void startGUIMode() throws IOException {
         TrafficSimulator ts = new TrafficSimulator();
         Controller c = new Controller(ts, _eventsFactory);
+        FileInputStream in;
         if (_inFile != null) {
-           FileInputStream in = new FileInputStream(new File(_inFile));
-       }
-        SwingUtilities.invokeLater(() -> new MainWindow(c));
+            in = new FileInputStream(new File(_inFile));
+        } else {
+            in = null;
+        }
+        SwingUtilities.invokeLater(() -> new MainWindow(c, in, ticks));
     }
 
-    private static void start(String[] args) throws IOException {
+    private static void start(String[] args) throws Exception {
         initFactories();
         parseArgs(args);
         if (_mode == Mode.CONSOLE) {
             startBatchMode();
-        }
-        else {
+        } else {
             startGUIMode();
         }
     }

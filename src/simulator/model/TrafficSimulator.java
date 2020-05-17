@@ -29,16 +29,16 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
         }
     }
 
-    public void advance() {
+    public void advance() throws Exception {
         simTime++;
         for (TrafficSimObserver observer : obs) {
             observer.onAdvanceStart(map, events, simTime);
         }
-        while (!events.isEmpty() && events.get(0).getTime() == simTime) {
-            events.get(0).execute(map);
-            events.remove(0);
-        }
         try {
+            while (!events.isEmpty() && events.get(0).getTime() == simTime) {
+                events.get(0).execute(map);
+                events.remove(0);
+            }
             for (Junction j : map.getJunctions()) {
                 j.advance(simTime);
             }
@@ -49,13 +49,11 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
             for (TrafficSimObserver observer : obs) {
                 observer.onError(e.getMessage());
             }
+            throw e;
         }
-
         for (TrafficSimObserver observer : obs) {
             observer.onAdvanceEnd(map, events, simTime);
         }
-
-
     }
 
     public void reset() {

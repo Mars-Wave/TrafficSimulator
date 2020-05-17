@@ -33,7 +33,7 @@ public class Controller {
         }
     }
 
-    public void run(int n, OutputStream out) {
+    public void run(int n, OutputStream out) throws Exception {
         if (out != null) {
             PrintStream p = new PrintStream(out);
             p.println("{ " + "\"" + "states" + "\"" + ":[");
@@ -69,7 +69,7 @@ public class Controller {
         sim.addEvent(e);
     }
 
-    public void run(int n) {
+    public void run(int n) throws  Exception{
         run(n, null);
     }
 

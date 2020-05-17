@@ -31,36 +31,35 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		update();
+		update(events);
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		setEventsList(events);
-		update();
+		update(events);
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		_events.clear();
-		update();
+		update(events);
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
+		update(events);
 	}
 
 	@Override
 	public void onError(String err) {
 	}
 
-	private void update() {
+	private void update(List<Event> events) {
+		setEventsList(events);
 		fireTableDataChanged();
 	}
 
 	private void setEventsList(List<Event> events) {
 		_events = events;
-		update();
 	}
 
 	@Override

@@ -29,40 +29,34 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		_vehicles = map.getVehicles();
-		update();
-
+		update(map);
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		_vehicles = new ArrayList<>();
-		update();
+		update(map);
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-
+		update(map);
 	}
 
 	@Override
 	public void onError(String err) {
-		// TODO Auto-generated method stub
-
 	}
-	public void update() {
+
+	private void update(RoadMap map) {
+		setVehiclesList(map.getVehicles());
 		fireTableDataChanged();
 	}
 
-	public void setVehiclesList(List<Vehicle> vehicles) {
+	private void setVehiclesList(List<Vehicle> vehicles) {
 		_vehicles = vehicles;
-		update();
 	}
 
 	@Override
@@ -110,8 +104,6 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

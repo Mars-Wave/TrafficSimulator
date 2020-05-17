@@ -25,22 +25,22 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private ChangeWeatherDialog SWC;
     private ChangeCO2ClassDialog SCC;
 
-    public ControlPanel(Controller cont) {
+    public ControlPanel(Controller cont, int ticks) {
         controller = cont;
         controller.addObserver(this);
         this.setLayout(new BorderLayout());
         bs = new ArrayList<>();
-        initContP();
+        initContP(ticks);
     }
 
-    private void initContP() {
+    private void initContP(int ticks) {
         init();
         initFC();
         initSCC();
         initSWC();
         initRunButton();
         initStopButton();
-        ticksSpinner();
+        ticksSpinner(ticks);
         initExitButton();
     }
 
@@ -81,7 +81,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                         JOptionPane.showMessageDialog(this, "File does not exist", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    System.out.println("Load cancelled by user.");
+                    JOptionPane.showMessageDialog(this, "You cancelled the load", "Load cancelled", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -134,10 +134,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         leftPanel.add(stopButton);
     }
 
-    private void ticksSpinner() {
+    private void ticksSpinner(int ticks) {
         JLabel ticksLabel = new JLabel("Ticks:");
         this.add(ticksLabel);
         tickSpinner = new JSpinner();
+        tickSpinner.setValue(ticks);
         tickSpinner.setPreferredSize(new Dimension(50, 25));
         leftPanel.add(tickSpinner);
     }
@@ -147,7 +148,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             try {
                 controller.run(1);
             } catch (Exception e) {
-                // TODO show error message
                 _stopped = true;
                 return;
             }
