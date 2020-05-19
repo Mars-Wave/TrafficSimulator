@@ -151,10 +151,11 @@ public class Main {
         FileInputStream in;
         if (_inFile != null) {
             in = new FileInputStream(new File(_inFile));
+            c.loadEvents(in);
         } else {
             in = null;
         }
-        SwingUtilities.invokeLater(() -> new MainWindow(c, in, ticks));
+        SwingUtilities.invokeLater(() -> new MainWindow(c, ticks));
     }
 
     private static void start(String[] args) throws Exception {

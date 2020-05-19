@@ -22,8 +22,8 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
 
     public JunctionsTableModel(Controller ctrl) {
-        ctrl.addObserver(this);
         _junctions = new ArrayList<>();
+        ctrl.addObserver(this);
     }
 
     public String getColumnName(int column) {

@@ -16,6 +16,7 @@ import java.util.List;
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     private Controller controller;
+    private RoadMap _map;
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JFileChooser fc;
@@ -24,13 +25,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private ArrayList<JButton> bs; //buttons that will be nullified when stop occurs. This can be seen in EnableToolbar(bool)
     private ChangeWeatherDialog SWC;
     private ChangeCO2ClassDialog SCC;
+    private int _simTime;
 
     public ControlPanel(Controller cont, int ticks) {
         controller = cont;
-        controller.addObserver(this);
         this.setLayout(new BorderLayout());
         bs = new ArrayList<>();
         initContP(ticks);
+        controller.addObserver(this);
     }
 
     private void initContP(int ticks) {
@@ -95,6 +97,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         JButton sccButton = new JButton();
         sccButton.setIcon(new ImageIcon("resources/icons/co2class.png"));
         sccButton.addActionListener((e) -> {
+        	SCC.setVehList(_map.getVehicles());
+            SCC.updateTime(_simTime);
             this.SCC.setVisible(true);
         });
         bs.add(sccButton);
@@ -106,6 +110,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         JButton swcButton = new JButton();
         swcButton.setIcon(new ImageIcon("resources/icons/weather.png"));
         swcButton.addActionListener((e) -> {
+        	SWC.setrList(_map.getRoads());
+            SWC.updateTime(_simTime);
             this.SWC.setVisible(true);
         });
         bs.add(swcButton);
@@ -149,6 +155,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 controller.run(1);
             } catch (Exception e) {
                 _stopped = true;
+                JOptionPane.showMessageDialog(this, "Something went wrong when trying to run the Simulator", "Exception", JOptionPane.ERROR_MESSAGE);
+                enableToolBar(true);
                 return;
             }
             SwingUtilities.invokeLater(() -> run_sim(n - 1));
@@ -172,34 +180,37 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-        SCC.updateTime(time);
-        SWC.updateTime(time);
+    	update(map, time);
     }
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-        SCC.setVehList(map.getVehicles());
-        SWC.setrList(map.getRoads());
+    	update(map, time);
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-        SCC.setVehList(map.getVehicles());
-        SWC.setrList(map.getRoads());
+    	update(map, time);
     }
 
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
-        SCC.setVehList(map.getVehicles());
-        SWC.setrList(map.getRoads());
+    	update(map, time);
+       
     }
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
+    	update(map, time);
     }
 
     @Override
     public void onError(String err) {
+    }
+    
+    public void update(RoadMap map, int time) {
+    	_map = map;
+    	_simTime = time;
     }
 
 }

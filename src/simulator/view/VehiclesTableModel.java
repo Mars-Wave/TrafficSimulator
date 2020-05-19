@@ -18,8 +18,8 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 
 
 	public VehiclesTableModel(Controller ctrl) {
-		ctrl.addObserver(this);
 		_vehicles = new ArrayList<>();
+		ctrl.addObserver(this);
 	}
 
 	public String getColumnName(int column) {

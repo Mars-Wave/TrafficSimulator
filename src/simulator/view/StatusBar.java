@@ -16,8 +16,8 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
     private JLabel errorLabel;
 
     public StatusBar(Controller _ctrl) {
-        _ctrl.addObserver(this);
         initGUI();
+        _ctrl.addObserver(this);
     }
 
     private void initGUI() {

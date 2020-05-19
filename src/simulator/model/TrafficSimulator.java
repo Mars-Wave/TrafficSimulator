@@ -1,10 +1,12 @@
 package simulator.model;
 
-import org.json.JSONObject;
-import simulator.misc.SortedArrayList;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
+
+import exception.MyException;
+import simulator.misc.SortedArrayList;
 
 public class TrafficSimulator implements Observable<TrafficSimObserver> {
 
@@ -21,11 +23,18 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
     }
 
     public void addEvent(Event e) {
-        if (e.getTime() >= simTime) {
+        if (e.getTime() > simTime) {
             events.add(e);
             for (TrafficSimObserver observer : obs) {
                 observer.onEventAdded(map, events, e, simTime);
             }
+        }
+        else {
+        	String errMsg = "You can't add an event at a time (" + e.getTime() + ") lower or equal to the current sim time (" + simTime +").";
+        	for (TrafficSimObserver observer : obs) {
+                observer.onError(errMsg);
+            }
+        	throw new MyException(errMsg);
         }
     }
 

@@ -1,14 +1,23 @@
 package simulator.view;
 
-import simulator.control.Controller;
-import simulator.misc.Pair;
-import simulator.model.SetContClassEvent;
-import simulator.model.Vehicle;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+
+import simulator.control.Controller;
+import simulator.misc.Pair;
+import simulator.model.RoadMap;
+import simulator.model.SetContClassEvent;
+import simulator.model.Vehicle;
 
 public class ChangeCO2ClassDialog extends JDialog {
 
@@ -17,6 +26,7 @@ public class ChangeCO2ClassDialog extends JDialog {
     private JComboBox<Integer> co2list;
     private JComboBox<String> vehList;
     private int _simTime;
+    private RoadMap _map;
 
     public ChangeCO2ClassDialog(Controller controller) {
         this.controller = controller;

@@ -17,8 +17,8 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 
 	public EventsTableModel(Controller ctrl) {
-		ctrl.addObserver(this);
 		_events = new ArrayList<>();
+		ctrl.addObserver(this);
 	}
 
 	public String getColumnName(int column) {

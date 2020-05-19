@@ -13,13 +13,10 @@ public class MainWindow extends JFrame {
 	private JPanel mapsPanel;
     private JPanel tablesPanel;
 
-    public MainWindow(Controller ctrl, FileInputStream in, int ticks) {
+    public MainWindow(Controller ctrl, int ticks) {
         super("Traffic Simulator");
         _ctrl = ctrl;
         initGUI(ticks);
-        if (in != null) {
-            _ctrl.loadEvents(in);
-        }
     }
 
     private void initGUI(int ticks) {
