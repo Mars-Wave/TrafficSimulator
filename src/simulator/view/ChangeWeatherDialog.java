@@ -4,6 +4,7 @@ import simulator.control.Controller;
 import simulator.misc.Pair;
 import simulator.model.Road;
 import simulator.model.SetWeatherEvent;
+import simulator.model.Vehicle;
 import simulator.model.Weather;
 
 import javax.swing.*;
@@ -22,7 +23,6 @@ public class ChangeWeatherDialog extends JDialog {
 
     public ChangeWeatherDialog(Controller controller) {
         this.controller = controller;
-        rList = new JComboBox<>();
         initGUI();
         this.pack();
     }
@@ -76,10 +76,10 @@ public class ChangeWeatherDialog extends JDialog {
 
     private void initTicksSpinner(JPanel centerPanel) {
         centerPanel.add(new JLabel("Ticks:"));
-        spin = new JSpinner();
+        SpinnerModel sm = new SpinnerNumberModel(1, 1, 10000, 1);
+        spin = new JSpinner(sm);
         spin.setPreferredSize(new Dimension(50, 25));
         centerPanel.add(spin);
-
     }
 
     private void initWeatherList(JPanel centerPanel) {
@@ -91,14 +91,14 @@ public class ChangeWeatherDialog extends JDialog {
     private void initRList(JPanel centerPanel) {
         JLabel roadLabel = new JLabel("Road:");
         centerPanel.add(roadLabel);
+        rList = new JComboBox<>();
         centerPanel.add(rList);
-        rList.setEditable(true);
     }
 
     public void setrList(List<Road> rList) {
-        this.rList.removeAllItems();
+        DefaultComboBoxModel model = (DefaultComboBoxModel) this.rList.getModel();
         for (Road r : rList) {
-            this.rList.addItem(r.getId());
+            model.addElement(r.getId());
         }
     }
 

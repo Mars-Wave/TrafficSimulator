@@ -12,7 +12,7 @@ Main:
 
         }
 
-NOT DONE
+DONE
 
 - You should not pass the file to MainWindow, simply call load events in startGUIMode
 
@@ -40,7 +40,7 @@ DONE
 
  - you are loading the contamination images continuously, better cache them in an array of type Image[] so the access is faster
 
-
+DONE
 
  - the way you update the lists of vehicles/roads in the dialog in not good. This should be done only when opening the dialog. 
 
@@ -49,8 +49,6 @@ DONE
         SCC.setVehList(map.getVehicles());
 
         SWC.setrList(map.getRoads());
-
-
 
         SCC.updateTime(time);
 
@@ -64,6 +62,8 @@ DONE
 
  - in the dialogs the combobox should not be editable
 
-
+DONE
 
  - in the dialogs, the minimum value for the ticks JSpinner should be 1
+
+DONE

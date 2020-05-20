@@ -87,7 +87,7 @@ public class Main {
                 throw new ParseException("Mode: " + _mode + " is not a supported mode.");
             }
         }
-        if (_mode == null) {
+        else {
             _mode = Mode.GUI;
         }
     }

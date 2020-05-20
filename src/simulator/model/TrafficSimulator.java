@@ -66,12 +66,12 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
     }
 
     public void reset() {
+        events.clear();
         map.reset();
         simTime = 0;
         for (TrafficSimObserver observer : obs) {
             observer.onReset(map, events, simTime);
         }
-
     }
 
     public JSONObject report() {

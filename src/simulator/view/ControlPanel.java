@@ -76,8 +76,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                     File file = fc.getSelectedFile();
                     FileInputStream in = null;
                     try {
-                        in = new FileInputStream(file);
                         controller.reset();
+                        in = new FileInputStream(file);
                         controller.loadEvents(in);
                     } catch (FileNotFoundException e1) {    // Exception treatment
                         JOptionPane.showMessageDialog(this, "File does not exist", "Error", JOptionPane.ERROR_MESSAGE);
@@ -196,7 +196,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
     	update(map, time);
-       
     }
 
     @Override

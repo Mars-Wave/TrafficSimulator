@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapByRoadComponent extends JComponent implements TrafficSimObserver {
@@ -25,7 +26,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
     private Image _rain;
     private Image _cloud;
     private Image _sun;
-
+    private ArrayList<Image> _conts;
 
     private RoadMap _map;
 
@@ -43,6 +44,11 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
         _rain = loadImage("rain.png");
         _cloud = loadImage("cloud.png");
         _sun = loadImage("sun.png");
+        _conts = new ArrayList<>();
+        for (int i = 0; i < 6; i++){
+            String aux = "cont_" + i + ".png";
+            _conts.add(loadImage(aux));
+        }
     }
 
     public void paintComponent(Graphics graphics) {
@@ -122,8 +128,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
             }
             g.drawImage(imgaux, this.getWidth() -100 + 16, (i + 1) * 50 - 16, 32, 32, this);
             int C = (int) Math.floor(Math.min((double) r.getTotalCont() / (1.0 + r.getContLimit()), 1.0) / 0.19);
-            String aux = "cont_" + C + ".png";
-            g.drawImage(loadImage(aux), this.getWidth() -100 + (16+32), (i + 1) * 50 - 16, 32, 32, this);
+            g.drawImage(_conts.get(C), this.getWidth() -100 + (16+32), (i + 1) * 50 - 16, 32, 32, this);
             i++;
         }
     }

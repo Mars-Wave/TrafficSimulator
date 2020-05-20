@@ -6,12 +6,7 @@ import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.*;
 
 import simulator.control.Controller;
 import simulator.misc.Pair;
@@ -30,7 +25,6 @@ public class ChangeCO2ClassDialog extends JDialog {
 
     public ChangeCO2ClassDialog(Controller controller) {
         this.controller = controller;
-        this.vehList = new JComboBox<>();
         initGUI();
         this.pack();
     }
@@ -85,7 +79,8 @@ public class ChangeCO2ClassDialog extends JDialog {
 
     private void initSpinner(JPanel centerPanel) {
         centerPanel.add(new JLabel("Ticks:"));
-        spin = new JSpinner();
+        SpinnerModel sm = new SpinnerNumberModel(1, 1, 10000, 1);
+        spin = new JSpinner(sm);
         spin.setPreferredSize(new Dimension(50, 25));
         centerPanel.add(spin);
     }
@@ -99,14 +94,14 @@ public class ChangeCO2ClassDialog extends JDialog {
 
     private void initVehicleBox(JPanel centerPanel) {
         centerPanel.add(new JLabel("Vehicle:"));
+        this.vehList = new JComboBox<>();
         centerPanel.add(vehList);
-        vehList.setEditable(true);
     }
 
     public void setVehList(List<Vehicle> vList) {
-        vehList.removeAllItems();
+        DefaultComboBoxModel model = (DefaultComboBoxModel) this.vehList.getModel();
         for (Vehicle v : vList) {
-            vehList.addItem(v.getId());
+            model.addElement(v.getId());
         }
     }
 
