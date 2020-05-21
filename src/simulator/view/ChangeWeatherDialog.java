@@ -85,6 +85,7 @@ public class ChangeWeatherDialog extends JDialog {
     private void initWeatherList(JPanel centerPanel) {
         centerPanel.add(new JLabel("Weather:"));
         weatherList = new JComboBox(Weather.weathers());
+        weatherList.setEditable(false);
         centerPanel.add(weatherList);
     }
 
@@ -92,6 +93,7 @@ public class ChangeWeatherDialog extends JDialog {
         JLabel roadLabel = new JLabel("Road:");
         centerPanel.add(roadLabel);
         rList = new JComboBox<>();
+        rList.setEditable(false);
         centerPanel.add(rList);
     }
 

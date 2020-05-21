@@ -89,12 +89,14 @@ public class ChangeCO2ClassDialog extends JDialog {
         centerPanel.add(new JLabel("CO2 Class:"));
         Integer[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         co2list = new JComboBox<>(numbers);
+        co2list.setEditable(false);
         centerPanel.add(co2list);
     }
 
     private void initVehicleBox(JPanel centerPanel) {
         centerPanel.add(new JLabel("Vehicle:"));
         this.vehList = new JComboBox<>();
+        vehList.setEditable(false);
         centerPanel.add(vehList);
     }
 

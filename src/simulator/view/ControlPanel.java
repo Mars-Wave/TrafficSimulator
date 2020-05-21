@@ -143,7 +143,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private void ticksSpinner(int ticks) {
         JLabel ticksLabel = new JLabel("Ticks:");
         this.add(ticksLabel);
-        tickSpinner = new JSpinner();
+        SpinnerModel value = new SpinnerNumberModel(ticks, 1, 1000, 1);
+        tickSpinner = new JSpinner(value);
         tickSpinner.setValue(ticks);
         tickSpinner.setPreferredSize(new Dimension(50, 25));
         leftPanel.add(tickSpinner);
