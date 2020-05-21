@@ -78,6 +78,7 @@ public class ChangeWeatherDialog extends JDialog {
         centerPanel.add(new JLabel("Ticks:"));
         SpinnerModel sm = new SpinnerNumberModel(1, 1, 10000, 1);
         spin = new JSpinner(sm);
+        spin.setEditor(new JSpinner.DefaultEditor(spin));
         spin.setPreferredSize(new Dimension(50, 25));
         centerPanel.add(spin);
     }
